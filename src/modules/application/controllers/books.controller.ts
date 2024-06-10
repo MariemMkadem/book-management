@@ -16,13 +16,17 @@ import {
   BOOKS_SEARCH_SERVICE_INBOUND,
   BOOK_CREATE_SERVICE_INBOUND,
   BOOK_UPDATE_SERVICE_INBOUND,
+  BOOK_IMPORT_SERVICE_INBOUND,
   BookCreateServiceInbound,
   BookUpdateServiceInbound,
   BooksSearchServiceInbound,
+  BookImportServiceInbound,
+
 } from "../../core/services/inbounds/books";
 import { PaginationHelper } from "../../../helpers/pagination.helper";
 import { BookCreateInput } from "../../core/models/inputs/books/book-create.input";
 import { BookUpdateInput } from "../../core/models/inputs/books/book-update.input";
+
 
 @controller("/books")
 export class BookController implements interfaces.Controller {
@@ -32,7 +36,10 @@ export class BookController implements interfaces.Controller {
     @inject(BOOK_UPDATE_SERVICE_INBOUND)
     private bookUpdateService: BookUpdateServiceInbound,
     @inject(BOOKS_SEARCH_SERVICE_INBOUND)
-    private booksSearchService: BooksSearchServiceInbound
+    private booksSearchService: BooksSearchServiceInbound,
+    @inject(BOOK_IMPORT_SERVICE_INBOUND) 
+    private bookImportService: BookImportServiceInbound
+
   ) {}
 
   @httpGet("/")
@@ -80,6 +87,20 @@ export class BookController implements interfaces.Controller {
     const input: BookUpdateInput = { id, ...req.body };
     try {
       const result = await this.bookUpdateService.update(input);
+      return res.status(200).json({ success: result });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
+
+  @httpPost("/import")
+  public async importBooks(
+    @request() req: express.Request,
+    @response() res: express.Response
+  ): Promise<express.Response> {
+    const path: string = req.body.path;
+    try {
+      const result = await this.bookImportService.importBooks(path);
       return res.status(200).json({ success: result });
     } catch (error) {
       return res.status(400).json({ error: error.message });
