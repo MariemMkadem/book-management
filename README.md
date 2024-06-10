@@ -20,7 +20,7 @@ Ce projet vise à développer une librairie pour gérer une collection de livres
 
 2. Naviguer dans le répertoire du projet :
     ```bash
-    cd test_books
+    cd book-management
     ```
 
 3. Installer les dépendances :
