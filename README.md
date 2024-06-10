@@ -1,5 +1,5 @@
 
-# test_books
+# book-management
 
 ## Introduction
 Ce projet vise à développer une librairie pour gérer une collection de livres en utilisant Node.js et TypeScript, avec une base de données PostgreSQL.
@@ -42,7 +42,7 @@ Assurez-vous que le fichier `tsconfig.json` est correctement configuré pour Typ
 
 ## Structure du Projet
 ```
-test_books/
+book-management/
 ├── .gitignore
 ├── README.md
 ├── package-lock.json
